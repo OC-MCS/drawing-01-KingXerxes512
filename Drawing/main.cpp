@@ -1,14 +1,15 @@
 //================================================
-// YOUR NAME GOES HERE <-----------------  
+// Luke Rodman
 //================================================
 #include <iostream>
 #include <fstream>
-using namespace std;
 #include <SFML\Graphics.hpp>
 #include "SettingsMgr.h"
 #include "ShapeMgr.h"
 #include "SettingsUI.h"
 #include "DrawingUI.h"
+
+using namespace std;
 using namespace sf;
 
 // Finish this code. Other than where it has comments telling you to 

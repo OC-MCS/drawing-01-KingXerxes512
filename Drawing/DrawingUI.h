@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "ShapeMgr.h"
 #include <iostream>
+
 using namespace std;
 using namespace sf;
-#include "ShapeMgr.h"
 
 // finish this code; add functions, data as needed
 
