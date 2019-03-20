@@ -24,7 +24,7 @@ int main()
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Drawing");
 	window.setFramerateLimit(60);
 
-	SettingsMgr settingsMgr(Color::Blue, ShapeEnum::CIRCLE);
+	SettingsMgr settingsMgr(Color::Blue, ShapeEnum::SQUARE);
 	SettingsUI  settingsUI(&settingsMgr); 
 	ShapeMgr    shapeMgr;
 	DrawingUI   drawingUI(Vector2f(200, 50));
@@ -65,6 +65,7 @@ int main()
 		window.clear();
 
 		// this should draw the left hand side of the window (all of the settings info)
+		// Also draws the buttons and changes them when the mouse is within their bounds or they are the selected setting
 		settingsUI.draw(window);
 
 		// this should draw the rectangle that encloses the drawing area, then draw the

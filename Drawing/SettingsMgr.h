@@ -14,7 +14,7 @@ private:
 	Color curColor;
 	ShapeEnum curShape;
 public:
-	SettingsMgr(Color startingColor, ShapeEnum startingShape )
+	SettingsMgr(Color startingColor, ShapeEnum startingShape)
 	{
 		curColor = startingColor;
 		curShape = startingShape;

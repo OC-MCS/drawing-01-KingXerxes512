@@ -15,19 +15,64 @@ void die(string msg)
 class SettingsUI
 {
 private:
-
+	SettingsMgr* Mangr;
+	Color curColor;
+	ShapeEnum curShape;
+	CircleShape redButton;
+	CircleShape greenButton;
+	CircleShape blueButton;
+	CircleShape circleButton;
+	RectangleShape squareButton;
 public:
 	SettingsUI(SettingsMgr *mgr)
 	{
-
+		Mangr = mgr;
+		CircleShape c1(25, 30);
+		CircleShape c2(20, 30);
+		RectangleShape r(Vector2f(40.0f, 40.0f));
+		curColor = mgr->getCurColor();
+		curShape = mgr->getCurShape();
+		redButton = c1;
+		greenButton = c1;
+		blueButton = c1;
+		circleButton = c2;
+		squareButton = r;
 	}
+
 	void handleMouseUp(Vector2f mouse)
 	{
-
+		if (redButton.getGlobalBounds().contains(mouse))
+		{
+			curColor = Color::Red;
+			Mangr->setCurColor(Color::Red);
+		}
+		if (greenButton.getGlobalBounds().contains(mouse))
+		{
+			curColor = Color::Green;
+			Mangr->setCurColor(Color::Green);
+		}
+		if (blueButton.getGlobalBounds().contains(mouse))
+		{
+			curColor = Color::Blue;
+			Mangr->setCurColor(Color::Blue);
+		}
+		if (circleButton.getGlobalBounds().contains(mouse))
+		{
+			curShape = CIRCLE;
+			Mangr->setCurShape(ShapeEnum::CIRCLE);
+		}
+		if (squareButton.getGlobalBounds().contains(mouse))
+		{
+			curShape = SQUARE;
+			Mangr->setCurShape(ShapeEnum::SQUARE);
+		}
 	}
 
 	void draw(RenderWindow& win)
 	{
+		// =================================================
+		// Draws the buttons and background and borders
+		// =================================================
 		// Draws the UI background and borders
 		RectangleShape Selector(Vector2f(194.0f, 594.0f));
 		Selector.setPosition(Vector2f(3.0f, 3.0f));
@@ -52,21 +97,18 @@ public:
 
 		// Draws the Color Cirlces
 		float x = 70.0f, y = 85.0f;
-		CircleShape c1(25, 30);
-		c1.setOutlineColor(Color::Red);
-		c1.setOutlineThickness(3);
-		c1.setPosition(Vector2f(x, y));
-		CircleShape c2(25, 30);
-		c2.setOutlineColor(Color::Green);
-		c2.setOutlineThickness(3);
-		c2.setPosition(Vector2f(x, y + 80.0f /* Offset */));
-		CircleShape c3(25, 30);
-		c3.setOutlineColor(Color::Blue);
-		c3.setOutlineThickness(3);
-		c3.setPosition(Vector2f(x, y + 160.0f /* Offset */));
-		win.draw(c1);
-		win.draw(c2);
-		win.draw(c3);
+		redButton.setOutlineColor(Color::Red);
+		redButton.setOutlineThickness(3);
+		redButton.setPosition(Vector2f(x, y));
+		greenButton.setOutlineColor(Color::Green);
+		greenButton.setOutlineThickness(3);
+		greenButton.setPosition(Vector2f(x, y + 80.0f /* Offset */));
+		blueButton.setOutlineColor(Color::Blue);
+		blueButton.setOutlineThickness(3);
+		blueButton.setPosition(Vector2f(x, y + 160.0f /* Offset */));
+		win.draw(redButton);
+		win.draw(greenButton);
+		win.draw(blueButton);
 
 		// Draws the Shape Label
 		Font font2;
@@ -78,16 +120,105 @@ public:
 		win.draw(shape);
 
 		// Draws the Shape Outlines
-		CircleShape circleTemplate(20, 30);
-		circleTemplate.setPosition(Vector2f(x, y + 360));
-		circleTemplate.setOutlineColor(Color::Black);
-		circleTemplate.setOutlineThickness(3);
-		RectangleShape rectTemplate(Vector2f(40.0f, 40.0f));
-		rectTemplate.setPosition(Vector2f(x, y + 430.0f));
-		rectTemplate.setOutlineColor(Color::Black);
-		rectTemplate.setOutlineThickness(3);
-		win.draw(circleTemplate);
-		win.draw(rectTemplate);
-	}
 
+		circleButton.setPosition(Vector2f(x, y + 360));
+		circleButton.setOutlineColor(Color::Black);
+		circleButton.setOutlineThickness(3);
+
+		squareButton.setPosition(Vector2f(x, y + 430.0f));
+		squareButton.setOutlineColor(Color::Black);
+		squareButton.setOutlineThickness(3);
+		win.draw(circleButton);
+		win.draw(squareButton);
+
+		// =================================================================
+		// Fills the color and shape if  they are the curColor or curShape
+		// =================================================================
+		if (curColor == Color::Red)
+		{
+			redButton.setFillColor(Color::Red);
+			win.draw(redButton);
+		}
+		else if (curColor == Color::Green)
+		{
+			greenButton.setFillColor(Color::Green);
+			win.draw(greenButton);
+		}
+		else if (curColor == Color::Blue)
+		{
+			blueButton.setFillColor(Color::Blue);
+			win.draw(blueButton);
+		}
+		if (curShape == CIRCLE)
+		{
+			circleButton.setFillColor(Color::Black);
+			win.draw(circleButton);
+		}
+		else if (curShape == SQUARE)
+		{
+			squareButton.setFillColor(Color::Black);
+			win.draw(squareButton);
+		}
+
+		// ===============================================================================
+		// Detects if mouse is within the button bounds
+		// ===============================================================================
+		// If mouse is within the circles, they will fill to show you can select them
+		if (redButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win))))
+		{
+			redButton.setFillColor(Color::Red);
+			win.draw(redButton);
+		}
+		else if (!(redButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win)))) && curColor != Color::Red)
+		{
+			redButton.setFillColor(Color::White);
+			win.draw(redButton);
+		}
+
+		if (greenButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win))))
+		{
+			greenButton.setFillColor(Color::Green);
+			win.draw(greenButton);
+		}
+		else if (!(greenButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win)))) && curColor != Color::Green)
+		{
+			greenButton.setFillColor(Color::White);
+			win.draw(greenButton);
+		}
+
+		if (blueButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win))))
+		{
+			blueButton.setFillColor(Color::Blue);
+			win.draw(blueButton);
+		}
+		else if (!(blueButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win)))) && curColor != Color::Blue)
+		{
+			blueButton.setFillColor(Color::White);
+			win.draw(blueButton);
+		}
+
+		// If mouse enters the shapes, they will fill to show you can select them
+		if (circleButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win))))
+		{
+			circleButton.setFillColor(Color::Black);
+			win.draw(circleButton);
+		}
+		else if (!(circleButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win)))) && curShape != ShapeEnum::CIRCLE)
+		{
+			circleButton.setFillColor(Color::White);
+			win.draw(circleButton);
+		}
+
+		if (squareButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win))))
+		{
+			squareButton.setFillColor(Color::Black);
+			win.draw(squareButton);
+		}
+		else if (!(squareButton.getGlobalBounds().contains(win.mapPixelToCoords(Mouse::getPosition(win)))) && curShape != ShapeEnum::SQUARE)
+		{
+			squareButton.setFillColor(Color::White);
+			win.draw(squareButton);
+		}
+	}
 };
+
