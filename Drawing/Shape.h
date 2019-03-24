@@ -11,16 +11,25 @@ using namespace sf;
 // for Circle and Square
 class DrawingShape 
 {
-	virtual void draw()
-	{
+private:
+	ShapeEnum shape;
+	Color color;
+public:
+	virtual void draw() {
+
 	}
-	//virtual struct getFileRecord();
+	void setColor(Color col) {
+		color = col;
+	}
+	Color getColor() {
+		return color;
+	}
 };
 
 class Circle : public DrawingShape
 {
 private:
-	CircleShape c;
+	
 public:
 	Circle()
 	{

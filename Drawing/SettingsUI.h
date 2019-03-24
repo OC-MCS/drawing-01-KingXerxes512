@@ -23,6 +23,7 @@ private:
 	CircleShape blueButton;
 	CircleShape circleButton;
 	RectangleShape squareButton;
+	RectangleShape buttonArea;
 public:
 	SettingsUI(SettingsMgr *mgr)
 	{
@@ -30,6 +31,7 @@ public:
 		CircleShape c1(25, 30);
 		CircleShape c2(20, 30);
 		RectangleShape r(Vector2f(40.0f, 40.0f));
+		RectangleShape r2(Vector2f(194.0f, 594.0f));
 		curColor = mgr->getCurColor();
 		curShape = mgr->getCurShape();
 		redButton = c1;
@@ -37,6 +39,7 @@ public:
 		blueButton = c1;
 		circleButton = c2;
 		squareButton = r;
+		buttonArea = r2;
 	}
 
 	void handleMouseUp(Vector2f mouse)
@@ -70,21 +73,11 @@ public:
 
 	void draw(RenderWindow& win)
 	{
-		// =================================================
-		// Draws the buttons and background and borders
-		// =================================================
-		// Draws the UI background and borders
-		RectangleShape Selector(Vector2f(194.0f, 594.0f));
-		Selector.setPosition(Vector2f(3.0f, 3.0f));
-		Selector.setOutlineColor(Color::Cyan);
-		Selector.setOutlineThickness(3);
-		win.draw(Selector);
-
-		RectangleShape Drawer(Vector2f(597.0f, 594.0f));
-		Drawer.setPosition(Vector2f(200.0f, 3.0f));
-		Drawer.setOutlineColor(Color::Cyan);
-		Drawer.setOutlineThickness(3);
-		win.draw(Drawer);
+		// Draws the button region
+		buttonArea.setPosition(Vector2f(3.0f, 3.0f));
+		buttonArea.setOutlineColor(Color::Cyan);
+		buttonArea.setOutlineThickness(3);
+		win.draw(buttonArea);
 
 		// Draws the Color Label
 		Font font;

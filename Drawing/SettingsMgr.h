@@ -11,8 +11,8 @@ enum ShapeEnum { CIRCLE, SQUARE };
 class SettingsMgr
 {
 private:
-	Color curColor;
-	ShapeEnum curShape;
+	Color curColor = Color::Blue;
+	ShapeEnum curShape = SQUARE;
 public:
 	SettingsMgr(Color startingColor, ShapeEnum startingShape)
 	{
