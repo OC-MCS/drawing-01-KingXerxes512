@@ -24,7 +24,7 @@ int main()
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Drawing");
 	window.setFramerateLimit(60);
 
-	SettingsMgr settingsMgr(Color::Blue, ShapeEnum::SQUARE);
+	SettingsMgr settingsMgr(Color::Blue, ShapeEnum::CIRCLE);
 	SettingsUI  settingsUI(&settingsMgr); 
 	ShapeMgr    shapeMgr;
 	DrawingUI   drawingUI(Vector2f(200, 50));

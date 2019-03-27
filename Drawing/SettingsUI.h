@@ -113,11 +113,9 @@ public:
 		win.draw(shape);
 
 		// Draws the Shape Outlines
-
 		circleButton.setPosition(Vector2f(x, y + 360));
 		circleButton.setOutlineColor(Color::Black);
 		circleButton.setOutlineThickness(3);
-
 		squareButton.setPosition(Vector2f(x, y + 430.0f));
 		squareButton.setOutlineColor(Color::Black);
 		squareButton.setOutlineThickness(3);

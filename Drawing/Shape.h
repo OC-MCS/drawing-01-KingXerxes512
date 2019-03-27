@@ -14,32 +14,41 @@ class DrawingShape
 private:
 	ShapeEnum shape;
 	Color color;
+	Vector2f pos;
 public:
-	virtual void draw() {
+	virtual void draw() {}
 
-	}
 	void setColor(Color col) {
 		color = col;
 	}
 	Color getColor() {
 		return color;
 	}
+	void setShape(ShapeEnum newShape) {
+		shape = newShape;
+	}
+	ShapeEnum getShape() {
+		return shape;
+	}
+	void setPos(Vector2f Pos) {
+		pos = Pos;
+	}
+	Vector2f getPos() {
+		return pos;
+	}
 };
 
 class Circle : public DrawingShape
 {
 private:
-	
+	CircleShape c;
 public:
-	Circle()
-	{
-
+	Circle() {
+		setShape(CIRCLE);
 	}
-	void draw()
-	{
-
+	void draw() {
+		
 	}
-	//struct getFileRecord();
 };
 
 class Square : public DrawingShape
@@ -47,14 +56,11 @@ class Square : public DrawingShape
 private:
 	RectangleShape r;
 public:
-	Square()
-	{
+	Square() {
+		setShape(SQUARE);
+	}
+	void draw() {
 
 	}
-	void draw()
-	{
-		
-	}
-	//struct getFileRecord();
 };
 
