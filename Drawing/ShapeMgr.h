@@ -11,34 +11,22 @@ using namespace sf;
 class ShapeMgr
 {
 private:
-	vector<DrawingShape> a;
+	vector<DrawingShape*> shapes;
 public:
-	ShapeMgr()
-	{
-		
-	}
 
-	void addShape(Vector2f pos, ShapeEnum whichShape, Color color)
-	{
-		switch (whichShape) {
-			case CIRCLE: 
-			{
-				Circle c;
-				c.setColor(color);
-				a.push_back(c);
-			}
-			case SQUARE:
-			{
-				Square s;
-				s.setColor(color);
-				a.push_back(s);
-			}
-
+	// Creates a pointer to a new circle or rectangle and then pushes it to the back of the shapes vector
+	void addShape(Vector2f pos, ShapeEnum whichShape, Color color) {
+		if (whichShape == CIRCLE) {
+			Circle* circlePtr = new Circle(whichShape, color, pos);
+			shapes.push_back(circlePtr);
+		}
+		else {
+			Square* squarePtr = new Square(whichShape, color, pos);
+			shapes.push_back(squarePtr);
 		}
 	}
-
-	int getVectorSize()
-	{
-		return a.size();
+	// Returns a pointer to the list of pointers to shapes
+	vector<DrawingShape*>* getPtr() {
+		return &shapes;
 	}
 };
