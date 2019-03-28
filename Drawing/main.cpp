@@ -98,6 +98,8 @@ void readFromFile(SettingsMgr& settingsMgr, ShapeMgr& shapeMgr) {
 	save.open("shapes.bin", ios::binary | ios::in);
 	// Reads the save settings at the beginning of the file and then sets the current settings to what is stored in the struct
 	save.read(reinterpret_cast<char*>(&settings), sizeof(saveSettings));
+	if (settings.color == Color::Black)
+		settings.color = Color::Red;	// If statement if file isn't red and color is defaulted to black
 	settingsMgr.setCurColor(settings.color);
 	settingsMgr.setCurShape(settings.shape);
 	// Uses end of file loop 
