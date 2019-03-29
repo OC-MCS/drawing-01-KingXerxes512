@@ -42,6 +42,13 @@ public:
 		buttonArea = r2;
 	}
 
+	void setCurColor(Color col) {
+		curColor = col;
+	}
+	void setCurShape(ShapeEnum shape) {
+		curShape = shape;
+	}
+
 	void handleMouseUp(Vector2f mouse)
 	{
 		if (redButton.getGlobalBounds().contains(mouse))

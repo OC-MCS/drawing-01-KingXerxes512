@@ -22,7 +22,7 @@ struct saveShapes {
 	Vector2f pos;
 };
 
-void readFromFile(SettingsMgr& settingsMgr, ShapeMgr& shapeMgr);
+void readFromFile(SettingsMgr& settingsMgr, ShapeMgr& shapeMgr, SettingsUI& settingsUI);
 void writeToFile(SettingsMgr&, ShapeMgr&);
 
 int main()
@@ -39,7 +39,7 @@ int main()
 	DrawingUI   drawingUI(Vector2f(200, 50));
 	
 	// Reads from file if it exists
-	readFromFile(settingsMgr, shapeMgr);
+	readFromFile(settingsMgr, shapeMgr, settingsUI);
 
 	while (window.isOpen()) 
 	{
@@ -91,17 +91,21 @@ int main()
 }
 
 // Reads from save file
-void readFromFile(SettingsMgr& settingsMgr, ShapeMgr& shapeMgr) {
+void readFromFile(SettingsMgr& settingsMgr, ShapeMgr& shapeMgr, SettingsUI& settingsUI) {
 	saveSettings settings;
 	saveShapes shapes;
 	ifstream save;
 	save.open("shapes.bin", ios::binary | ios::in);
 	// Reads the save settings at the beginning of the file and then sets the current settings to what is stored in the struct
 	save.read(reinterpret_cast<char*>(&settings), sizeof(saveSettings));
-	if (settings.color == Color::Black)
-		settings.color = Color::Red;	// If statement if file isn't red and color is defaulted to black
+	if (settings.color == Color::Black) {	// If nothing is read from file, sets it to default values
+		settings.color = Color::Red;
+		settings.shape = CIRCLE;
+	}
 	settingsMgr.setCurColor(settings.color);
 	settingsMgr.setCurShape(settings.shape);
+	settingsUI.setCurColor(settings.color);
+	settingsUI.setCurShape(settings.shape);
 	// Uses end of file loop 
 	// Reads one struct of vector values which is recreated based on if the shape is a circle or a square
 	while (save.read(reinterpret_cast<char*>(&shapes), sizeof(saveShapes))) {
